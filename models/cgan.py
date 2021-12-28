@@ -1,8 +1,6 @@
 # %%
 '''
-pure dcgan structure.
-code similar sample from the pytorch code.
-https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
+mlp condtional gan structure.
 '''
 import torch
 import torch.nn as nn
@@ -88,4 +86,4 @@ class Discriminator(nn.Module):
         d_in = torch.cat((imgs.view(imgs.size(0), -1), self.label_embedding(labels)), -1)
         validity = self.model(d_in)
 
-        return validity
+        return validity.squeeze()

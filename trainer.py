@@ -10,7 +10,8 @@ import datetime
 import torch.nn as nn 
 import torchvision
 
-from models.cgan import Generator, Discriminator
+# from models.cgan import Generator, Discriminator
+from models.cgan_conv import Generator, Discriminator
 from utils.utils import *
 
 # %%
@@ -97,8 +98,8 @@ class Trainer_cgan(object):
                 real_labels = tensor2var(real_labels)
                 
                 # adversarial ground truths
-                real = tensor2var(torch.full((real_images.size(0), 1), 0.9)) # (*, )
-                fake = tensor2var(torch.full((real_images.size(0), 1), 0.0)) #(*, )
+                real = tensor2var(torch.full((real_images.size(0),), 0.9)) # (*, )
+                fake = tensor2var(torch.full((real_images.size(0),), 0.0)) #(*, )
                 
                 # ==================== Train D ==================
                 # set D gradients to zero.
@@ -201,6 +202,7 @@ class Trainer_cgan(object):
 
         # for orignal gan loss function
         self.adversarial_loss = nn.MSELoss().cuda()
+        # self.adversarial_loss = nn.BCEWithLogitsLoss().cuda()
 
         # print networks
         print(self.G)
